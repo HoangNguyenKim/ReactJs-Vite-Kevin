@@ -1,12 +1,13 @@
-const FakeComponent1 = () =>{
+const FakeComponent = () =>{
     return (
-        <div class="Class_name">TPM 11</div>
+        <>
+        <div className="Class_name"
+        style={{borderRadius: "10px"}}
+        >TPM 11</div>
+        <div className="University">Duy Tan University</div>
+        </>
     );
 }
 
-const FakeComponent2 = () =>{
-    return (
-        <div class="University">Duy Tan University</div>
-    );
-}
-export {FakeComponent1, FakeComponent2};
+
+export {FakeComponent};
