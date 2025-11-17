@@ -10,18 +10,26 @@ const App = () => {
     car: "BMW",
     car2: "RR"
   }
-  const callMe = (Name) => {
-    alert(`Call me ${Name}`)
-  }
+  const randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
   const [toDoLists, setToDoList] = useState([
     { id: 1, name: "learning ReactJS" },
     { id: 2, name: "Watching youtube" }
   ])
+  const addNewTodo = (Name) => {
+    const newTodo = {
+      id: randomIntFromInterval(1, 100000),
+      name: Name
+    }
+    setToDoList([...toDoLists, newTodo]);
+  }
+
+
+
   return (
     <div className="todo_container">
       <div className="todo_title">ToDo List</div>
       <TodoNew
-        callMe={callMe}
+        addNewTodo={addNewTodo}
       />
       <TodoData
         name={name}

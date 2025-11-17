@@ -2,9 +2,10 @@ import { useState } from "react";
 
 const TodoNew = (props) => {
     console.log(props);
-    const { callMe } = props;
+    const { addNewTodo } = props;
+
     const handelClick = () => {
-        console.log("click me ");
+        addNewTodo(value);
     }
     const handleOnchange = (name) => {
         setValue(name);
