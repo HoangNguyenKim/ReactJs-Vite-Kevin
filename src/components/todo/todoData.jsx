@@ -3,9 +3,14 @@ const TodoData = (props) => {
     console.log(toDoList);
     return (
         <div className="todo_data">
-            <div>My name is {name}</div>
-            <div>Iam {age} Years old</div>
-            <div > Watch  {data.car} on youtube  </div>
+            {toDoList.map((item, index, array) => {
+                return (
+                    <div className="todo-item">
+                        <div>{item.name}</div>
+                        <button>delete</button>
+                    </div>
+                );
+            })}
 
             <div>
                 {JSON.stringify(toDoList)}
