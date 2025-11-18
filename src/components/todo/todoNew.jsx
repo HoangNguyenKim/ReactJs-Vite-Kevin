@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const TodoNew = (props) => {
-    console.log(props);
+
     const { addNewTodo } = props;
 
     const handelClick = () => {
