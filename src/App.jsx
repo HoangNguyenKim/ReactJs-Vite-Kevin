@@ -4,6 +4,7 @@ import TodoNew from './components/todo/todoNew'
 import reactLogo from './assets/react.svg'
 import { useState } from 'react'
 const App = () => {
+
   const randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
   const [toDoLists, setToDoList] = useState([])
   const addNewTodo = (Name) => {
@@ -12,6 +13,10 @@ const App = () => {
       name: Name
     }
     setToDoList([...toDoLists, newTodo]);
+  }
+  const deleteTodo = (idDelete) => {
+    const newTodo = toDoLists.filter((item) => item.id != idDelete);
+    setToDoList(newTodo);
   }
 
   return (
@@ -23,6 +28,7 @@ const App = () => {
       {toDoLists.length > 0 ?
         <TodoData
           toDoList={toDoLists}
+          deleteTodo={deleteTodo}
         />
         :
         <div>
