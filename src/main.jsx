@@ -11,12 +11,17 @@ import RegisterPage from './pages/register.jsx';
 import UserPage from './pages/user.jsx';
 import ProductPage from './pages/product.jsx';
 import './style/global.css';
+import TodoApp from './components/todo/todoApp.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        index: true,
+        element: <TodoApp />
+      }, ,
       {
         path: "/user",
         element: <UserPage />
