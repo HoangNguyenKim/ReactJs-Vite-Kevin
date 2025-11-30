@@ -1,6 +1,7 @@
 import { Input } from 'antd';
 import { Button } from 'antd';
 import { useState } from "react";
+import axios from 'axios';
 
 const UserForm = () => {
     const [fullName, setFullName] = useState("");
@@ -8,7 +9,15 @@ const UserForm = () => {
     const [Password, setPassword] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
     const addNewUser = () => {
-        alert("them moi user");
+        const URL = "http://localhost:8080/api/v1/user";
+        const userData = {
+            fullName: fullName,
+            email: Email,
+            password: Password,
+            phone: PhoneNumber
+        }
+        axios.post(URL, userData);
+
     }
     return (
         <div className='user-form'
