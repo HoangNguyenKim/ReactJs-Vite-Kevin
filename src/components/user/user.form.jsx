@@ -12,8 +12,14 @@ const UserForm = () => {
 
         if (res.data) {
             notification.success({
-                message: "Created successfully",
+                message: "Create User",
                 description: "Tao moi thanh cong"
+            })
+        }
+        else {
+            notification.error({
+                message: "Create User",
+                description: JSON.stringify(res.message)
             })
         }
     }

@@ -1,5 +1,5 @@
 
-import axios from 'axios';
+
 import axios from './api.customize';
 const createUserAPI = (fullName, Email, Password, PhoneNumber) => {
     const URL = "/api/v1/user";
