@@ -2,15 +2,24 @@ import { Input, message } from 'antd';
 import { useState } from "react";
 import { createUserAPI } from '../../services/api.service';
 import { Button, notification, Space, Modal } from 'antd';
-const UserForm = () => {
+const UserForm = (props) => {
+    const { loadUserList } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [fullName, setFullName] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
-    const handleCancel = () => {
+
+    // const handleCancel = () => {
+    //     setIsModalOpen(false);
+    // };
+    const resetAndCloseModal = () => {
+        setEmail("");
+        setFullName("");
+        setPassword("");
+        setPhoneNumber("");
         setIsModalOpen(false);
-    };
+    }
     const handleCreate = async () => {
         const res = await createUserAPI(fullName, Email, Password, PhoneNumber);
 
@@ -19,6 +28,8 @@ const UserForm = () => {
                 message: "Create User",
                 description: "Tao moi thanh cong"
             })
+            resetAndCloseModal();
+            await loadUserList();
 
         }
         else {
@@ -27,7 +38,7 @@ const UserForm = () => {
                 description: JSON.stringify(res.message)
             })
         }
-        setIsModalOpen(false);
+
     }
     return (
         <div className='user-form'
@@ -55,7 +66,9 @@ const UserForm = () => {
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={isModalOpen}
                 onOk={handleCreate}
-                onCancel={handleCancel}
+                onCancel={() => {
+                    setIsModalOpen(false);
+                }}
                 maskClosable={false}
                 okText="Create"
                 cancelText="Cancel"
