@@ -1,13 +1,17 @@
 import { Input, message } from 'antd';
 import { useState } from "react";
 import { createUserAPI } from '../../services/api.service';
-import { Button, notification, Space } from 'antd';
+import { Button, notification, Space, Modal } from 'antd';
 const UserForm = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [fullName, setFullName] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
-    const addNewUser = async () => {
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+    const handleCreate = async () => {
         const res = await createUserAPI(fullName, Email, Password, PhoneNumber);
 
         if (res.data) {
@@ -15,6 +19,7 @@ const UserForm = () => {
                 message: "Create User",
                 description: "Tao moi thanh cong"
             })
+
         }
         else {
             notification.error({
@@ -22,6 +27,7 @@ const UserForm = () => {
                 description: JSON.stringify(res.message)
             })
         }
+        setIsModalOpen(false);
     }
     return (
         <div className='user-form'
@@ -33,54 +39,70 @@ const UserForm = () => {
             <div
                 style={{
                     display: "flex",
-                    gap: "10px",
-                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    marginTop: "5px"
                 }}
             >
-                <div>
-                    <span>Full Name</span>
-                    <Input
-                        placeholder="Nguyen Van A"
-                        value={fullName}
-                        onChange={(event) => { setFullName(event.target.value) }}
-                    />
-                </div>
-                <div>
-                    <span>Email</span>
-                    <Input
-                        placeholder="abc@gmail.com"
-                        value={Email}
-                        onChange={(event) => { setEmail(event.target.value) }}
-                    />
-                </div>
-                <div>
-                    <span>Password</span>
-                    <Input.Password
-                        placeholder=""
-                        value={Password}
-                        onChange={(event) => { setPassword(event.target.value) }}
-                    />
-                </div>
-                <div>
-                    <span>Phone Number</span>
-                    <Input
-                        placeholder="0314344234234"
-                        value={PhoneNumber}
-                        onChange={(event) => { setPhoneNumber(event.target.value) }}
-                    />
-                </div>
+                <h2>Table User</h2>
+                <Button type="primary"
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    Create User
+                </Button>
             </div>
-            <Button type="primary" style={{
-                marginTop: "5px",
-                display: "flex",
-                float: "right",
-                padding: "20px"
-            }}
-                onClick={() => { addNewUser() }}
+            <Modal
+                title="Basic Modal"
+                closable={{ 'aria-label': 'Custom Close Button' }}
+                open={isModalOpen}
+                onOk={handleCreate}
+                onCancel={handleCancel}
+                maskClosable={false}
+                okText="Create"
+                cancelText="Cancel"
             >
-                Primary
-            </Button>
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "10px",
+                        flexDirection: "column",
+                    }}
+                >
+                    <div>
+                        <span>Full Name</span>
+                        <Input
+                            placeholder="Nguyen Van A"
+                            value={fullName}
+                            onChange={(event) => { setFullName(event.target.value) }}
+                        />
+                    </div>
+                    <div>
+                        <span>Email</span>
+                        <Input
+                            placeholder="abc@gmail.com"
+                            value={Email}
+                            onChange={(event) => { setEmail(event.target.value) }}
+                        />
+                    </div>
+                    <div>
+                        <span>Password</span>
+                        <Input.Password
+                            placeholder=""
+                            value={Password}
+                            onChange={(event) => { setPassword(event.target.value) }}
+                        />
+                    </div>
+                    <div>
+                        <span>Phone Number</span>
+                        <Input
+                            placeholder="0314344234234"
+                            value={PhoneNumber}
+                            onChange={(event) => { setPhoneNumber(event.target.value) }}
+                        />
+                    </div>
+                </div>
+            </Modal>
         </div>
+
     )
 }
 export default UserForm;
