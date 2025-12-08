@@ -1,18 +1,12 @@
 import { Input, message } from 'antd';
 import { useState } from "react";
-import { createUserAPI } from '../../services/api.service';
 import { Button, notification, Space, Modal } from 'antd';
-const UserForm = (props) => {
-    const { loadUserList } = props;
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const UpdateUserModal = () => {
+    const [isModalOpen, setIsModalOpen] = useState(true);
     const [fullName, setFullName] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
-
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    // };
     const resetAndCloseModal = () => {
         setEmail("");
         setFullName("");
@@ -20,57 +14,22 @@ const UserForm = (props) => {
         setPhoneNumber("");
         setIsModalOpen(false);
     }
-    const handleCreate = async () => {
-        const res = await createUserAPI(fullName, Email, Password, PhoneNumber);
-
-        if (res.data) {
-            notification.success({
-                message: "Create User",
-                description: "Tao moi thanh cong"
-            })
-            resetAndCloseModal();
-            await loadUserList();
-
-        }
-        else {
-            notification.error({
-                message: "Create User",
-                description: JSON.stringify(res.message)
-            })
-        }
-
+    const handleEdit = () => {
+        resetAndCloseModal();
     }
     return (
-        <div className='user-form'
-            style={{
-                margin: "20px 10px",
-                padding: "10px"
-            }}
-        >
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "5px"
-                }}
-            >
-                <h2>Table User</h2>
-                <Button type="primary"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    Create User
-                </Button>
-            </div>
+        <>
+
             <Modal
-                title="Create User"
+                title="Edit User"
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={isModalOpen}
-                onOk={handleCreate}
+                onOk={handleEdit}
                 onCancel={() => {
                     setIsModalOpen(false);
                 }}
                 maskClosable={false}
-                okText="Create"
+                okText="SAVE"
                 cancelText="Cancel"
             >
                 <div
@@ -83,7 +42,7 @@ const UserForm = (props) => {
                     <div>
                         <span>Full Name</span>
                         <Input
-                            placeholder="Nguyen Van A"
+                            placeholder=""
                             value={fullName}
                             onChange={(event) => { setFullName(event.target.value) }}
                         />
@@ -91,7 +50,7 @@ const UserForm = (props) => {
                     <div>
                         <span>Email</span>
                         <Input
-                            placeholder="abc@gmail.com"
+                            placeholder=""
                             value={Email}
                             onChange={(event) => { setEmail(event.target.value) }}
                         />
@@ -107,15 +66,14 @@ const UserForm = (props) => {
                     <div>
                         <span>Phone Number</span>
                         <Input
-                            placeholder="0314344234234"
+                            placeholder=""
                             value={PhoneNumber}
                             onChange={(event) => { setPhoneNumber(event.target.value) }}
                         />
                     </div>
                 </div>
             </Modal>
-        </div>
-
+        </>
     )
 }
-export default UserForm;
+export default UpdateUserModal;
