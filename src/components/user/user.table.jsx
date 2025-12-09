@@ -3,8 +3,12 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.modal';
 import { useState } from 'react';
 const UserTable = (props) => {
+    // console.log(">>>check prop in user table", props);
+    // debugger
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const { useDataList } = props;
+    const { useDataList, loadUserList } = props;
+    // console.log(">>> load usẻr f", loadUserList);
+    // debugger
     const [dataUpdate, setDataUpdate] = useState(null);
 
     const columns = [
@@ -73,6 +77,7 @@ const UserTable = (props) => {
                 setIsUpdateModalOpen={setIsUpdateModalOpen}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
+                loadUserList={loadUserList}
             />
         </>
     );

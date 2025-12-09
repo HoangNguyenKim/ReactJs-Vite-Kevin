@@ -19,6 +19,7 @@ const UserPage = () => {
             />
             <UserTable
                 useDataList={useDataList}
+                loadUserList={loadUserList}
             />
         </div>
     );
