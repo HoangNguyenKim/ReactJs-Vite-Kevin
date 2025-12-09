@@ -1,32 +1,43 @@
 import { Input, message } from 'antd';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, notification, Space, Modal } from 'antd';
-const UpdateUserModal = () => {
-    const [isModalOpen, setIsModalOpen] = useState(true);
+const UpdateUserModal = (props) => {
+    const { isUpdateModalOpen, setIsUpdateModalOpen, dataUpdate, setDataUpdate } = props;
+    const [id, setId] = useState("");
     const [fullName, setFullName] = useState("");
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
+    const [Password, setPassword] = useState("");
+    const [Email, setEmail] = useState("");
+    useEffect(() => {
+        if (dataUpdate) {
+            setId(dataUpdate._id);
+            setFullName(dataUpdate.fullName);
+            setPhoneNumber(dataUpdate.phone);
+        }
+    }, [dataUpdate])
     const resetAndCloseModal = () => {
-        setEmail("");
+        setId("");
         setFullName("");
-        setPassword("");
         setPhoneNumber("");
-        setIsModalOpen(false);
+        setIsUpdateModalOpen(false);
+        setDataUpdate(null);
     }
     const handleEdit = () => {
         resetAndCloseModal();
     }
+
+
     return (
         <>
 
             <Modal
                 title="Edit User"
                 closable={{ 'aria-label': 'Custom Close Button' }}
-                open={isModalOpen}
+                open={isUpdateModalOpen}
                 onOk={handleEdit}
                 onCancel={() => {
-                    setIsModalOpen(false);
+                    resetAndCloseModal();
+
                 }}
                 maskClosable={false}
                 okText="SAVE"
@@ -40,6 +51,15 @@ const UpdateUserModal = () => {
                     }}
                 >
                     <div>
+                        <span>ID</span>
+                        <Input
+                            placeholder=""
+                            value={id}
+                            // onChange={(event) => { setId(event.target.value) }}
+                            disabled
+                        />
+                    </div>
+                    <div>
                         <span>Full Name</span>
                         <Input
                             placeholder=""
@@ -47,22 +67,14 @@ const UpdateUserModal = () => {
                             onChange={(event) => { setFullName(event.target.value) }}
                         />
                     </div>
-                    <div>
-                        <span>Email</span>
-                        <Input
-                            placeholder=""
-                            value={Email}
-                            onChange={(event) => { setEmail(event.target.value) }}
-                        />
-                    </div>
-                    <div>
+                    {/* <div>
                         <span>Password</span>
                         <Input.Password
                             placeholder=""
                             value={Password}
                             onChange={(event) => { setPassword(event.target.value) }}
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <span>Phone Number</span>
                         <Input

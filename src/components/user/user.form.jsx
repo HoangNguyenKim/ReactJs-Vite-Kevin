@@ -4,21 +4,21 @@ import { createUserAPI } from '../../services/api.service';
 import { Button, notification, Space, Modal } from 'antd';
 const UserForm = (props) => {
     const { loadUserList } = props;
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [fullName, setFullName] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
 
     // const handleCancel = () => {
-    //     setIsModalOpen(false);
+    //     setIsCreateModalOpen(false);
     // };
     const resetAndCloseModal = () => {
         setEmail("");
         setFullName("");
         setPassword("");
         setPhoneNumber("");
-        setIsModalOpen(false);
+        setIsCreateModalOpen(false);
     }
     const handleCreate = async () => {
         const res = await createUserAPI(fullName, Email, Password, PhoneNumber);
@@ -56,7 +56,7 @@ const UserForm = (props) => {
             >
                 <h2>Table User</h2>
                 <Button type="primary"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => setIsCreateModalOpen(true)}
                 >
                     Create User
                 </Button>
@@ -64,10 +64,10 @@ const UserForm = (props) => {
             <Modal
                 title="Create User"
                 closable={{ 'aria-label': 'Custom Close Button' }}
-                open={isModalOpen}
+                open={isCreateModalOpen}
                 onOk={handleCreate}
                 onCancel={() => {
-                    setIsModalOpen(false);
+                    setIsCreateModalOpen(false);
                 }}
                 maskClosable={false}
                 okText="Create"
