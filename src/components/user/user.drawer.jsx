@@ -37,22 +37,58 @@ const DetailUser = (props) => {
                 closable={{ 'aria-label': 'Close Button' }}
                 onClose={onClose}
                 open={isDetailUserOpen}
+                width="40vw"
+
                 style={{
                     padding: '10px',
 
                 }}
+
             >
-                <p>Full Name :{dataDrawer?.fullName}</p>
-                <br />
-                <p>Email :{dataDrawer?.email}</p>
-                <br />
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-around"
+                    }}
+                >
+                    <img src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${dataDrawer?.avatar}`}
+                        alt=""
+                        style={{
+                            height: "150px",
+                            border: "2px solid #ccc",
+                            borderRadius: "10px"
+                        }} />
+                    <div
 
-                <p>Phone Number :{dataDrawer?.phone}</p>
-                <br />
-                <p>Role :{dataDrawer?.role}</p>
-                {/* <Descriptions bordered title="User Info" items={items} />; */}
+                    >
+                        <p>Full Name :{dataDrawer?.fullName}</p>
+                        <br />
+                        <p>Email :{dataDrawer?.email}</p>
+                        <br />
 
-            </Drawer>
+                        <p>Phone Number :{dataDrawer?.phone}</p>
+                        <br />
+                        <p>Role :{dataDrawer?.role}</p>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        marginTop: "20px",
+                        transform: "translate(95px, 0px)"
+                    }}
+                >
+                    <label htmlFor='btnUploadImg'
+                        style={{
+                            backgroundColor: "orange",
+                            padding: "10px 5px",
+                            borderRadius: "10px",
+                            color: "white"
+                        }}
+                    >UpLoad IMG</label>
+                    <input type="file" id='btnUploadImg' hidden />
+
+                </div>
+            </Drawer >
         </>
 
 
