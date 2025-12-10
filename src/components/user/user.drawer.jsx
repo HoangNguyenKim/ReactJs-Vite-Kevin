@@ -1,5 +1,4 @@
 import { Button, Drawer, Timeline, Descriptions } from 'antd';
-import React, { useState } from 'react';
 
 const DetailUser = (props) => {
     const { isDetailUserOpen, setIsDetailUserOpen, dataDrawer, setDataDrawer } = props;

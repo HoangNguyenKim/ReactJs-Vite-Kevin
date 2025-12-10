@@ -1,5 +1,5 @@
-import { Space, Table, Tag, notification, Modal } from 'antd';
-import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, TruckOutlined } from '@ant-design/icons';
+import { Table, notification, Modal } from 'antd';
+import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.modal';
 import { useState } from 'react';
 import DetailUser from './user.drawer';
@@ -24,8 +24,7 @@ const UserTable = (props) => {
             cancelText: 'Cancel',
             onOk: async () => {
                 const res = await deleteUserAPI(id);
-                console.log(res)
-                debugger
+
                 if (res.data) {
                     notification.success({
                         message: "Delete User",
