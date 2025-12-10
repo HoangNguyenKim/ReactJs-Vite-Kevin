@@ -1,8 +1,9 @@
-import { Space, Table, Tag } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Space, Table, Tag, notification, Modal } from 'antd';
+import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined, TruckOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.modal';
 import { useState } from 'react';
 import DetailUser from './user.drawer';
+import { deleteUserAPI } from '../../services/api.service';
 const UserTable = (props) => {
 
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -11,6 +12,36 @@ const UserTable = (props) => {
     const [dataUpdate, setDataUpdate] = useState(null);
     const [isDetailUserOpen, setIsDetailUserOpen] = useState(false);
     const [dataDrawer, setDataDrawer] = useState(null);
+    const [modal, contextHolder] = Modal.useModal();
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
+    const deleteUser = async (id) => {
+        modal.confirm({
+            title: 'Confirm Delete User',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Bạn có chắc chắn muốn xoá người dùng này không',
+            okText: 'CONFIRM',
+            cancelText: 'Cancel',
+            onOk: async () => {
+                const res = await deleteUserAPI(id);
+                console.log(res)
+                debugger
+                if (res.data) {
+                    notification.success({
+                        message: "Delete User",
+                        description: "Xoá người dùng thành công"
+                    })
+
+                    await loadUserList();
+
+                }
+            },
+
+        });
+
+
+
+    }
     const columns = [
         {
             title: 'ID',
@@ -57,12 +88,16 @@ const UserTable = (props) => {
                         onClick={() => {
                             setIsUpdateModalOpen(true)
                             setDataUpdate(record)
+
                         }}
                     />
                     <DeleteOutlined
                         style={{
                             cursor: "pointer",
                             color: "red"
+                        }}
+                        onClick={() => {
+                            deleteUser(record._id)
                         }}
                     />
 
@@ -90,6 +125,8 @@ const UserTable = (props) => {
                 dataDrawer={dataDrawer}
                 setDataDrawer={setDataDrawer}
             />
+
+            {contextHolder}
         </>
     );
 }
