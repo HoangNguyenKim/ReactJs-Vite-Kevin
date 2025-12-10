@@ -2,15 +2,15 @@ import { Space, Table, Tag } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.modal';
 import { useState } from 'react';
+import DetailUser from './user.drawer';
 const UserTable = (props) => {
-    // console.log(">>>check prop in user table", props);
-    // debugger
+
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const { useDataList, loadUserList } = props;
-    // console.log(">>> load usẻr f", loadUserList);
-    // debugger
-    const [dataUpdate, setDataUpdate] = useState(null);
 
+    const [dataUpdate, setDataUpdate] = useState(null);
+    const [isDetailUserOpen, setIsDetailUserOpen] = useState(false);
+    const [dataDrawer, setDataDrawer] = useState(null);
     const columns = [
         {
             title: 'ID',
@@ -18,7 +18,13 @@ const UserTable = (props) => {
             render: (_, record) => {
                 return (
                     <>
-                        <a>{record._id}</a>
+                        <a
+                            onClick={() => {
+                                setDataDrawer(record)
+                                setIsDetailUserOpen(true)
+                            }}
+
+                        >{record._id}</a>
                     </>
                 )
             }
@@ -65,7 +71,6 @@ const UserTable = (props) => {
         },
 
     ];
-
     return (
         <>
             <Table columns={columns}
@@ -78,6 +83,12 @@ const UserTable = (props) => {
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
                 loadUserList={loadUserList}
+            />
+            <DetailUser
+                isDetailUserOpen={isDetailUserOpen}
+                setIsDetailUserOpen={setIsDetailUserOpen}
+                dataDrawer={dataDrawer}
+                setDataDrawer={setDataDrawer}
             />
         </>
     );
