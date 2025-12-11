@@ -1,7 +1,31 @@
 import { Button, Drawer, Timeline, Descriptions } from 'antd';
+import { useState, useEffect } from 'react';
 
 const DetailUser = (props) => {
     const { isDetailUserOpen, setIsDetailUserOpen, dataDrawer, setDataDrawer } = props;
+    const [selectedFile, setSelectedFile] = useState()
+    const [preview, setPreview] = useState()
+
+    // create a preview as a side effect, whenever selected file is changed
+    useEffect(() => {
+        if (!selectedFile) {
+            setPreview(undefined)
+            return
+        }
+        const objectURL = URL.createObjectURL(selectedFile);
+        setPreview(objectURL);
+        return () => {
+            URL.revokeObjectURL(objectURL);
+        }
+
+    }, [selectedFile])
+    const onSelectFile = (e) => {
+        if (!e.target.files || e.target.files.length == 0) {
+            setSelectedFile(undefined);
+            return;
+        }
+        setSelectedFile(e.target.files[0]);
+    }
     // const items = [
     //     {
     //         label: 'UserName',
@@ -23,6 +47,10 @@ const DetailUser = (props) => {
     //         children: 'No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China',
     //     },
     // ];
+
+    // Source - https://stackoverflow.com/a/57781164
+    // Posted by Jay Wick
+    // Retrieved 2025-12-11, License - CC BY-SA 4.0
 
 
 
@@ -55,6 +83,7 @@ const DetailUser = (props) => {
                         alt=""
                         style={{
                             height: "150px",
+                            width: '150px',
                             border: "2px solid #ccc",
                             borderRadius: "10px"
                         }} />
@@ -85,10 +114,27 @@ const DetailUser = (props) => {
                             color: "white"
                         }}
                     >UpLoad IMG</label>
-                    <input type="file" id='btnUploadImg' hidden />
+                    <input type="file" onChange={onSelectFile} id='btnUploadImg' hidden />
+
+                    {selectedFile && <img
+                        src={preview}
+                        style={{
+                            width: "150px",
+                            height: "150px",
+                            objectFit: "cover",
+                            borderRadius: "10px",
+                            border: "2px solid #ccc",
+                            marginTop: "15px",
+                            display: "flex",
+                            float: 'top',
+                            transform: "translate(-37px, 0px)"
+                        }}
+                    />}
 
                 </div>
             </Drawer >
+
+
         </>
 
 
