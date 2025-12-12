@@ -123,6 +123,7 @@ const UserTable = (props) => {
                 setIsDetailUserOpen={setIsDetailUserOpen}
                 dataDrawer={dataDrawer}
                 setDataDrawer={setDataDrawer}
+                loadUserList={loadUserList}
             />
 
             {contextHolder}

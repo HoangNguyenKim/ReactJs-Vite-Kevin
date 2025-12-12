@@ -32,9 +32,34 @@ const fetchAllUser = () => {
 
     return axios.get(URL);
 }
+const upLoadFile = (file, type) => {
+    const URL = "/api/v1/file/upload";
+    const formData = new FormData();
+    formData.append("fileImg", file);
+    let config = {
+        headers: {
+            "upload-type": type,
+            "Content-Type": "multipart/form-data"
+        }
+    }
+
+    return axios.post(URL, formData, config);
+}
+const updateAvatarAPI = (newAvatar, id, phoneNumber, fullName) => {
+    const URL = "/api/v1/user";
+    const userData = {
+        _id: id,
+        fullName: fullName,
+        avatar: newAvatar,
+        phone: phoneNumber
+    }
+    return axios.put(URL, userData);
+
+}
 export {
     createUserAPI,
     fetchAllUser,
     updateUserAPI,
-    deleteUserAPI
+    deleteUserAPI,
+    upLoadFile, updateAvatarAPI
 }

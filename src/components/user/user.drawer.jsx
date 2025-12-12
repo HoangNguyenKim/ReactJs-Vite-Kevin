@@ -1,8 +1,10 @@
-import { Button, Drawer, Timeline, Descriptions } from 'antd';
+import { Button, Drawer, Timeline, Descriptions, notification } from 'antd';
 import { useState, useEffect } from 'react';
+import { updateAvatarAPI, upLoadFile } from '../../services/api.service';
 
 const DetailUser = (props) => {
-    const { isDetailUserOpen, setIsDetailUserOpen, dataDrawer, setDataDrawer } = props;
+
+    const { isDetailUserOpen, setIsDetailUserOpen, dataDrawer, setDataDrawer, loadUserList } = props;
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
 
@@ -51,7 +53,39 @@ const DetailUser = (props) => {
     // Source - https://stackoverflow.com/a/57781164
     // Posted by Jay Wick
     // Retrieved 2025-12-11, License - CC BY-SA 4.0
+    const handleSaveNewAvatar = async () => {
+        const resUploadFile = await upLoadFile(selectedFile, "avatar");
+        if (resUploadFile.data) {
+            const newAvatar = resUploadFile.data.fileUploaded;
 
+            const resUpdateNewAvatar = await updateAvatarAPI(newAvatar, dataDrawer._id, dataDrawer.phone, dataDrawer.fullName);
+            if (resUpdateNewAvatar.data) {
+                notification.success({
+                    message: "Upload New Avatar",
+                    description: "Thay doi avatar thanh cong"
+                })
+                setIsDetailUserOpen(false);
+                setSelectedFile(undefined);
+                await loadUserList();
+
+            }
+            else {
+                notification.error({
+                    message: "Upload New Avatar",
+                    description: JSON.stringify(resUpdateNewAvatar.message)
+                })
+            }
+        }
+        else {
+            notification.error({
+                message: "Upload New Avatar",
+                description: JSON.stringify(resUploadFile.message)
+            })
+        }
+
+
+
+    }
 
 
     const onClose = () => {
@@ -116,20 +150,43 @@ const DetailUser = (props) => {
                     >UpLoad IMG</label>
                     <input type="file" onChange={onSelectFile} id='btnUploadImg' hidden />
 
-                    {selectedFile && <img
-                        src={preview}
-                        style={{
-                            width: "150px",
-                            height: "150px",
-                            objectFit: "cover",
-                            borderRadius: "10px",
-                            border: "2px solid #ccc",
-                            marginTop: "15px",
-                            display: "flex",
-                            float: 'top',
-                            transform: "translate(-37px, 0px)"
-                        }}
-                    />}
+                    {selectedFile &&
+                        <>
+                            <img
+                                src={preview}
+                                style={{
+                                    width: "150px",
+                                    height: "150px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                    border: "2px solid #ccc",
+                                    marginTop: "15px",
+                                    display: "flex",
+                                    float: 'top',
+                                    transform: "translate(-37px, 0px)"
+                                }}
+                            />
+                            <button
+                                style={{
+                                    backgroundColor: "blue",
+                                    color: "white",
+                                    border: "none",
+                                    padding: '10px',
+                                    borderRadius: "10px",
+                                    transform: "translate(15px, 0px)",
+                                    marginTop: "10px"
+
+                                }}
+                                onClick={() => {
+                                    handleSaveNewAvatar()
+
+                                }}
+                            >
+
+                                SAVE
+                            </button>
+                        </>
+                    }
 
                 </div>
             </Drawer >
