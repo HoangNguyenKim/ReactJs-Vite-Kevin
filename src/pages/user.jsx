@@ -9,7 +9,7 @@ const UserPage = () => {
     }, []);
     const loadUserList = async () => {
         const res = await fetchAllUser();
-        setUseDataList(res.data);
+        setUseDataList(res.data.result);
 
     }
     return (
