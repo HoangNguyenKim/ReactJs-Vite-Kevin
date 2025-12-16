@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import { fetchAllUser } from "../services/api.service";
 const UserPage = () => {
     const [useDataList, setUseDataList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPage, setTotalPage] = useState(0);
     useEffect(() => {
         loadUserList();
     }, []);
     const loadUserList = async () => {
-        const res = await fetchAllUser();
+        const res = await fetchAllUser(currentPage, pageSize);
         setUseDataList(res.data.result);
+        setTotalPage(res.data.meta.total);
+
 
     }
     return (
@@ -20,6 +25,12 @@ const UserPage = () => {
             <UserTable
                 useDataList={useDataList}
                 loadUserList={loadUserList}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                totalPage={totalPage}
+                setCurrentPage={setCurrentPage}
+                setPageSize={setPageSize}
+                setTotalPage={setTotalPage}
             />
         </div>
     );

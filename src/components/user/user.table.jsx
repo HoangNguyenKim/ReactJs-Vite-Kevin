@@ -7,13 +7,13 @@ import { deleteUserAPI } from '../../services/api.service';
 const UserTable = (props) => {
 
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const { useDataList, loadUserList } = props;
+    const { useDataList, loadUserList, currentPage, pageSize, totalPage,
+        setCurrentPage, setPageSize, setTotalPage } = props;
 
     const [dataUpdate, setDataUpdate] = useState(null);
     const [isDetailUserOpen, setIsDetailUserOpen] = useState(false);
     const [dataDrawer, setDataDrawer] = useState(null);
     const [modal, contextHolder] = Modal.useModal();
-    const [confirmDelete, setConfirmDelete] = useState(false);
 
     const deleteUser = async (id) => {
         modal.confirm({
@@ -40,6 +40,22 @@ const UserTable = (props) => {
 
 
 
+
+    }
+    const onChange = async (pagination, filters, sorter, extra) => {
+        console.log("pagination", pagination);
+        // console.log("filters", filters);
+        // console.log("sorter", sorter);
+        // console.log("extra", extra);
+        // debugger
+        await setCurrentPage(pagination.current);
+        await setPageSize(pagination.pageSize);
+        console.log(currentPage);
+        console.log(pageSize);
+        await loadUserList();
+
+
+        // await loadUserList();
     }
     const columns = [
         {
@@ -118,7 +134,16 @@ const UserTable = (props) => {
         <>
             <Table columns={columns}
                 dataSource={useDataList}
-                rowKey={"_id"} />
+                rowKey={"_id"}
+                pagination={{
+                    current: currentPage,
+                    pageSize: pageSize,
+                    showSizeChanger: true,
+                    total: totalPage,
+                    showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} rows </div>) }
+                }}
+                onChange={onChange}
+            />
 
             <UpdateUserModal
                 isUpdateModalOpen={isUpdateModalOpen}
@@ -134,6 +159,7 @@ const UserTable = (props) => {
                 setDataDrawer={setDataDrawer}
                 loadUserList={loadUserList}
             />
+
 
             {contextHolder}
         </>
