@@ -9,7 +9,7 @@ const UserPage = () => {
     const [totalPage, setTotalPage] = useState(0);
     useEffect(() => {
         loadUserList();
-    }, []);
+    }, [pageSize, currentPage])
     const loadUserList = async () => {
         const res = await fetchAllUser(currentPage, pageSize);
         setUseDataList(res.data.result);

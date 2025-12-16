@@ -1,7 +1,7 @@
 import { Table, notification, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DetailUser from './user.drawer';
 import { deleteUserAPI } from '../../services/api.service';
 const UserTable = (props) => {
@@ -30,6 +30,7 @@ const UserTable = (props) => {
                         message: "Delete User",
                         description: "Xoá người dùng thành công"
                     })
+                    setCurrentPage(1);
 
                     await loadUserList();
 
@@ -43,16 +44,22 @@ const UserTable = (props) => {
 
     }
     const onChange = async (pagination, filters, sorter, extra) => {
-        console.log("pagination", pagination);
+
         // console.log("filters", filters);
         // console.log("sorter", sorter);
         // console.log("extra", extra);
         // debugger
-        await setCurrentPage(pagination.current);
-        await setPageSize(pagination.pageSize);
-        console.log(currentPage);
-        console.log(pageSize);
-        await loadUserList();
+        if (pagination && pagination.current) {
+            if (+pagination.current !== +currentPage) {
+                setCurrentPage(pagination.current);
+            }
+        }
+        if (pagination && pagination.pageSize) {
+            if (+pagination.pageSize !== +pageSize) {
+                setPageSize(pagination.pageSize);
+            }
+        }
+
 
 
         // await loadUserList();
@@ -62,7 +69,11 @@ const UserTable = (props) => {
             title: 'N.O',
             render: (_, record, index) => {
                 return (
-                    index + 1
+                    <>
+                        {
+                            (index + 1) + (currentPage - 1) * pageSize
+                        }
+                    </>
                 )
             }
 
@@ -121,7 +132,8 @@ const UserTable = (props) => {
                             color: "red"
                         }}
                         onClick={() => {
-                            deleteUser(record._id)
+                            deleteUser(record._id);
+
                         }}
                     />
 
