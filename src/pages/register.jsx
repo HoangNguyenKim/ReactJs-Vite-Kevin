@@ -1,5 +1,6 @@
-import { Button, Input, Form, notification } from "antd";
-import { useNavigate } from "react-router";
+import { Button, Input, Form, notification, Grid, Col, Row } from "antd";
+import { useNavigate } from "react-router-dom";
+
 import { registerUserAPI } from "../services/api.service";
 
 const RegisterPage = () => {
@@ -43,96 +44,134 @@ const RegisterPage = () => {
     const [form] = Form.useForm();
     return (
         <>
+
             <Form
                 form={form}
                 name="basic"
                 layout="vertical"
-
                 onFinish={onFinish}
                 autoComplete="off"
                 style={{
-                    margin: "30px"
+                    margin: "30px",
+
                 }}
             >
-                <Form.Item
-                    label="Full Name"
-                    name="fullName"
-                    rules={[{
-                        required: true,
-                        message: 'Please input your full name!'
-                    }]}
+                <Row
+                    gutter={[0, 16]}
+                    justify={"center"}
                 >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Email!'
-                        },
-                        {
-                            required: true,
-                            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message: 'Unvalid Email Format'
-                        }
-                    ]}
+                    <Col span={12}>
+                        <Form.Item
+                            label="Full Name"
+                            name="fullName"
+                            rules={[{
+                                required: true,
+                                message: 'Please input your full name!'
+                            }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row
+                    gutter={[0, 16]}
+                    justify={"center"}
                 >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{
-                        required: true,
-                        message: 'Please input your password!'
-                    }]}
+                    <Col span={12}>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Email!'
+                                },
+                                {
+                                    required: true,
+                                    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: 'Unvalid Email Format'
+                                }
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row
+                    gutter={[0, 16]}
+                    justify={"center"}
                 >
-                    <Input.Password />
-                </Form.Item>
-                <Form.Item
-                    label="Phone Number"
-                    name="phone"
-                    rules={[
-                        {
+                    <Col span={12}>
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[{
+                                required: true,
+                                message: 'Please input your password!'
+                            }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row
+                    gutter={[0, 16]}
+                    justify={"center"}
+                >
+                    <Col span={12}>
+                        <Form.Item
+                            label="Phone Number"
+                            name="phone"
+                            rules={[
+                                {
 
-                            required: true,
-                            message: 'Please input your password!'
-                        },
-                        {
-                            required: true,
-                            pattern: /^0\d{9}$/,
-                            message: 'Unvalid Format'
-                        }
-                    ]}
-                >
-                    <Input />
-                </Form.Item >
-                <Button type="primary"
+                                    required: true,
+                                    message: 'Please input your password!'
+                                },
+                                {
 
-                    onClick={() => {
-                        form.submit()
-                    }}
-                >
-                    Register
-                </Button>
-                <Button
-                    onClick={() => {
-                        const name = form.getFieldValue("fullName");
-                        form.setFieldsValue(
-                            {
-                                email: `${name}@gmail.com`
-                            }
-                        );
-                    }}
-                >
-                    test
-                </Button>
+                                    pattern: /^0\d{9}$/,
+                                    message: 'Unvalid Format'
+                                }
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item >
+                    </Col>
+                </Row>
 
+                <Row
+                    gutter={[10, 0]}
+                    justify={"center"}
+                >
+                    <Col
+                        span={4}
+                    >
+                        <Button type="primary"
+
+                            onClick={() => {
+                                form.submit()
+                            }}
+                        >
+                            Register
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                const name = form.getFieldValue("fullName");
+                                form.setFieldsValue(
+                                    {
+                                        email: `${name}@gmail.com`
+                                    }
+                                );
+                            }}
+                        >
+                            test
+                        </Button>
+                    </Col>
+
+                </Row>
 
             </Form >
-
 
         </>
     );
