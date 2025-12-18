@@ -44,6 +44,95 @@ const RegisterPage = () => {
     const [form] = Form.useForm();
     return (
         <>
+            {/* <Row
+                style={{
+                    marginTop: "20px",
+                    width: '100%'
+                }}
+                justify={'center'}>
+                <Col>
+                    <Title>Login</Title>
+                </Col>
+            </Row>
+            <Row
+                style={{
+                    marginTop: "15px",
+                    width: '100%'
+                }}
+                justify={'center'}
+            >
+                <Col
+                    xs={24} md={12} lg={8}
+
+                >
+                    <Form
+                        name="login"
+                        initialValues={{ remember: true }}
+                        style={{
+                            border: 'solid 2px #ccc',
+                            borderRadius: '10px',
+                            padding: '20px',
+
+                        }}
+
+                        onFinish={onFinish}
+                    >
+
+
+                        <Form.Item
+                            name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Email!'
+                                },
+                                {
+
+                                    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: 'Unvalid  format'
+                                }
+                            ]}
+                        >
+                            <Input prefix={<UserOutlined />} placeholder="Email" />
+                        </Form.Item>
+
+
+
+                        <Form.Item
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                        >
+                            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+                        </Form.Item>
+
+
+                        <Form.Item>
+                            <Flex justify="space-between" align="center">
+                                <Form.Item name="remember" valuePropName="checked" noStyle>
+                                    <Checkbox>Remember me</Checkbox>
+                                </Form.Item>
+                                <a href="">Forgot password</a>
+                            </Flex>
+                        </Form.Item>
+
+
+
+                        <Form.Item>
+                            <Button block type="primary" htmlType="submit">
+                                Log in
+                            </Button>
+                            or
+                            <Link to="/register"> Register now!</Link>
+
+                        </Form.Item>
+
+
+
+
+
+                    </Form>
+                </Col>
+            </Row > */}
 
             <Form
                 form={form}

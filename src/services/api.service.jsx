@@ -1,5 +1,6 @@
 
 
+import { use } from 'react';
 import axios from './api.customize';
 const createUserAPI = (fullName, Email, Password, PhoneNumber) => {
     const URL = "/api/v1/user";
@@ -66,6 +67,16 @@ const registerUserAPI = (fullName, Email, Password, PhoneNumber) => {
     }
     return axios.post(URL, userData);
 }
+const loginAPI = (username, password) => {
+    const URL = "/api/v1/auth/login";
+    const userData = {
+        username: username,
+        password: password,
+        delay: 5000
+    }
+    return axios.post(URL, userData);
+
+}
 export {
     createUserAPI,
     fetchAllUser,
@@ -73,5 +84,6 @@ export {
     deleteUserAPI,
     upLoadFile,
     updateAvatarAPI,
-    registerUserAPI
+    registerUserAPI,
+    loginAPI,
 }
