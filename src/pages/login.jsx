@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, Row, Flex, Form, Input, Typography, notification, message, Divider } from 'antd';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAPI } from '../services/api.service';
+import { AuthContext } from '../components/context/auth.context';
 
 
 const { Title } = Typography;
@@ -14,15 +15,21 @@ const LoginPage = () => {
 
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
+    const { setUser } = useContext(AuthContext);
     const onFinish = async (values) => {
         if (loading) return;
         setLoading(true);
         try {
             const resLogin = await loginAPI(values.username, values.password);
             if (resLogin.data) {
+
                 message.success(
                     "Dang nhap thanh cong"
                 )
+                localStorage.setItem("access_token", resLogin.data.access_token);
+                setUser(resLogin.data.user);
+
+
                 navigate('/');
             }
             else {

@@ -1,14 +1,17 @@
 // import './header.css';
 import { Link, NavLink } from 'react-router-dom';
-import React, { useState } from 'react';
-import { HomeOutlined, UserOutlined, BookOutlined } from '@ant-design/icons';
+import React, { useContext, useState } from 'react';
+import { HomeOutlined, UserOutlined, BookOutlined, MoreOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
+import { AuthContext } from '../context/auth.context';
 const Header = () => {
     const [current, setCurrent] = useState('mail');
     const onClick = e => {
         console.log('click ', e);
         setCurrent(e.key);
     };
+    const { user } = useContext(AuthContext);
+    console.log(user);
     const items = [
         {
             label: <Link to={'/'}>Home</Link>,
@@ -24,6 +27,23 @@ const Header = () => {
             label: <Link to={'/book'}>Book</Link>,
             key: 'book',
             icon: <BookOutlined />,
+        },
+        {
+            label: 'Options',
+            key: 'SubMenu',
+            icon: <MoreOutlined />,
+            children: [
+                {
+                    type: 'group',
+                    label: <Link to={'/login'}>Login</Link>,
+
+                },
+                {
+                    type: 'group',
+                    label: <Link to={'/register'}>Register</Link>,
+
+                },
+            ],
         },
 
     ];
