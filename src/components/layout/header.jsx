@@ -1,7 +1,7 @@
 // import './header.css';
 import { Link, NavLink } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
-import { HomeOutlined, UserOutlined, BookOutlined, MoreOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, BookOutlined, MoreOutlined, LoginOutlined, LogoutOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { AuthContext } from '../context/auth.context';
 const Header = () => {
@@ -28,23 +28,42 @@ const Header = () => {
             key: 'book',
             icon: <BookOutlined />,
         },
-        {
-            label: 'Options',
+        ...(user.fullName == "" ? [{
+
+            label: <Link to={'/login'}>Login</Link>,
+            key: 'login',
+            icon: <LoginOutlined />,
+
+        }] : [{
+            label: `Welcome ${user.fullName}`,
             key: 'SubMenu',
-            icon: <MoreOutlined />,
+            icon: <CaretDownOutlined />,
             children: [
                 {
-                    type: 'group',
-                    label: <Link to={'/login'}>Login</Link>,
+                    // type: 'group',
+                    label: <Link to={'/login'}>Logout</Link>,
+                    icon: <LogoutOutlined />
 
                 },
-                {
-                    type: 'group',
-                    label: <Link to={'/register'}>Register</Link>,
 
-                },
             ],
-        },
+        }]),
+
+        // ...(user.fullName !== "" ? [{
+        //     label: `Welcome ${user.fullName}`,
+        //     key: 'SubMenu',
+        //     icon: <CaretDownOutlined />,
+        //     children: [
+        //         {
+        //             // type: 'group',
+        //             label: <Link to={'/login'}>Logout</Link>,
+        //             icon: <LogoutOutlined />
+
+        //         },
+
+        //     ],
+        // }] : [{}])
+
 
     ];
 
