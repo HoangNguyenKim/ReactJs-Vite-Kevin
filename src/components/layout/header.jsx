@@ -7,11 +7,11 @@ import { AuthContext } from '../context/auth.context';
 const Header = () => {
     const [current, setCurrent] = useState('mail');
     const onClick = e => {
-        console.log('click ', e);
+        // console.log('click ', e);
         setCurrent(e.key);
     };
     const { user } = useContext(AuthContext);
-    console.log(user);
+
     const items = [
         {
             label: <Link to={'/'}>Home</Link>,

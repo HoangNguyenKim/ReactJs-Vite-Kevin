@@ -77,6 +77,11 @@ const loginAPI = (username, password) => {
     return axios.post(URL, userData);
 
 }
+const getUserAPI = () => {
+    const URL = "/api/v1/auth/account";
+    return axios.get(URL);
+
+}
 export {
     createUserAPI,
     fetchAllUser,
@@ -86,4 +91,5 @@ export {
     updateAvatarAPI,
     registerUserAPI,
     loginAPI,
+    getUserAPI
 }
