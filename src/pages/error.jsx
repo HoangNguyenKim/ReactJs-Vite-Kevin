@@ -12,6 +12,7 @@ export default function ErrorPage() {
                 error.statusText || error.message
 
             }
+
             extra={<Button type="primary"><Link to="/">Back Home</Link></Button>}
         />
     );

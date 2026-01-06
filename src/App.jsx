@@ -6,9 +6,10 @@ import TodoApp from './components/todo/todoApp'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from './components/context/auth.context'
 import { getUserAPI } from './services/api.service'
+import { Spin } from 'antd';
 
 const App = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, isLoading, setIsLoading } = useContext(AuthContext);
   useEffect(() => {
     loadUserData();
   }, []);
@@ -17,6 +18,7 @@ const App = () => {
     if (res.data) {
       setUser(res.data.user);
     }
+    setIsLoading(false);
   }
 
 
@@ -24,9 +26,14 @@ const App = () => {
 
   return (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      {isLoading ?
+        <Spin fullscreen tip="Đang tải..." />
+        :
+        <>
+          <Header />
+          <Outlet />
+          <Footer /></>
+      }
     </>
   )
 }
