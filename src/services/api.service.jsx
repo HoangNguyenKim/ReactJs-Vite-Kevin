@@ -82,6 +82,11 @@ const getUserAPI = () => {
     return axios.get(URL);
 
 }
+const fetchAllBook = (current, pageSize) => {
+    const URL = `/api/v1/book?current=${current}&pageSize=${pageSize}`;
+    return axios.get(URL);
+}
+
 export {
     createUserAPI,
     fetchAllUser,
@@ -91,5 +96,7 @@ export {
     updateAvatarAPI,
     registerUserAPI,
     loginAPI,
-    getUserAPI
+    getUserAPI,
+    fetchAllBook
+
 }
