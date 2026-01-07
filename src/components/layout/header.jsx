@@ -1,8 +1,8 @@
 // import './header.css';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 import { HomeOutlined, UserOutlined, BookOutlined, MoreOutlined, LoginOutlined, LogoutOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { AuthContext } from '../context/auth.context';
 const Header = () => {
     const [current, setCurrent] = useState('mail');
@@ -10,8 +10,25 @@ const Header = () => {
         // console.log('click ', e);
         setCurrent(e.key);
     };
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
+    let navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        navigate('/login');
 
+        message.success(
+            "Dang xuat thanh cong"
+        );
+        setUser({
+            id: "",
+            email: "",
+            phone: "",
+            fullName: "",
+            role: "",
+            avatar: ""
+        });
+
+    }
     const items = [
         {
             label: <Link to={'/'}>Home</Link>,
@@ -41,7 +58,7 @@ const Header = () => {
             children: [
                 {
                     // type: 'group',
-                    label: <Link to={'/login'}>Logout</Link>,
+                    label: <span onClick={handleLogout}>Logout</span>,
                     icon: <LogoutOutlined />
 
                 },
