@@ -13,7 +13,7 @@ const BookPage = () => {
     useEffect(() => {
         loadBookData();
     }, [current, pageSize])
-    const loadBookData = async (current, pageSize) => {
+    const loadBookData = async () => {
         const res = await fetchAllBook(current, pageSize);
         if (res && res.data) {
             setBookList(res.data.result);
@@ -33,6 +33,7 @@ const BookPage = () => {
                 setPageSize={setPageSize}
                 total={total}
                 setTotal={setTotal}
+                loadBookData={loadBookData}
 
 
             />

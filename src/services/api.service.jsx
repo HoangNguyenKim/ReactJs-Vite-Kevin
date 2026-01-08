@@ -86,6 +86,21 @@ const fetchAllBook = (current, pageSize) => {
     const URL = `/api/v1/book?current=${current}&pageSize=${pageSize}`;
     return axios.get(URL);
 }
+const updateBookAPI = (_id, thumbnail, mainText, author, price, quantity, category) => {
+    const URL = "/api/v1/book";
+    const bookData = {
+        _id: _id,
+        thumbnail: thumbnail,
+        mainText: mainText,
+        author: author,
+        price: price,
+        quantity: quantity,
+        category: category
+
+    }
+    return axios.put(URL, bookData);
+
+}
 
 export {
     createUserAPI,
@@ -97,6 +112,7 @@ export {
     registerUserAPI,
     loginAPI,
     getUserAPI,
-    fetchAllBook
+    fetchAllBook,
+    updateBookAPI
 
 }

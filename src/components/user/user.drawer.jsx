@@ -5,8 +5,8 @@ import { updateAvatarAPI, upLoadFile } from '../../services/api.service';
 const DetailUser = (props) => {
 
     const { isDetailUserOpen, setIsDetailUserOpen, dataDrawer, setDataDrawer, loadUserList } = props;
-    const [selectedFile, setSelectedFile] = useState()
-    const [preview, setPreview] = useState()
+    const [selectedFile, setSelectedFile] = useState();
+    const [preview, setPreview] = useState();
 
     // create a preview as a side effect, whenever selected file is changed
     useEffect(() => {
@@ -28,31 +28,6 @@ const DetailUser = (props) => {
         }
         setSelectedFile(e.target.files[0]);
     }
-    // const items = [
-    //     {
-    //         label: 'UserName',
-    //         children: 'Zhou Maomao',
-    //     },
-    //     {
-    //         label: 'Live',
-    //         span: 'filled', // span = 2
-    //         children: 'Hangzhou, Zhejiang',
-    //     },
-    //     {
-    //         label: 'Remark',
-    //         span: 'filled', // span = 3
-    //         children: 'empty',
-    //     },
-    //     {
-    //         label: 'Address',
-    //         span: 1, // span will be 3 and warning for span is not align to the end
-    //         children: 'No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China',
-    //     },
-    // ];
-
-    // Source - https://stackoverflow.com/a/57781164
-    // Posted by Jay Wick
-    // Retrieved 2025-12-11, License - CC BY-SA 4.0
     const handleSaveNewAvatar = async () => {
         const resUploadFile = await upLoadFile(selectedFile, "avatar");
         if (resUploadFile.data) {
